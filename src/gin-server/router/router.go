@@ -17,4 +17,6 @@ func Router() {
 	RouterMux.GET("/", controller.A1)
 	RouterMux.GET("/welcome/:name", controller.GetParam)
 	RouterMux.GET("/welcome", controller.GetQuery)
+	RouterMux.POST("/post", controller.GetPostValue)
+	RouterMux.POST("/build", controller.BuildData)
 }
