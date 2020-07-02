@@ -19,4 +19,11 @@ func Router() {
 	RouterMux.GET("/welcome", controller.GetQuery)
 	RouterMux.POST("/post", controller.GetPostValue)
 	RouterMux.POST("/build", controller.BuildData)
+
+	// 路由组
+	v1 := RouterMux.Group("/v1")
+	{
+		v1.GET("/", controller.A1)
+		v1.GET("/welcome/:name", controller.GetParam)
+	}
 }
