@@ -2,6 +2,7 @@ package router
 
 import (
 	"ginweb/src/controller"
+	"ginweb/src/middleware"
 	"github.com/gin-gonic/gin"
 )
 
@@ -23,7 +24,8 @@ func Router() {
 	// 路由组
 	v1 := RouterMux.Group("/v1")
 	{
-		v1.GET("/", controller.A1)
+		// 加入中间件
+		v1.GET("/", middleware.Middleware1, controller.A1)
 		v1.GET("/welcome/:name", controller.GetParam)
 	}
 }
