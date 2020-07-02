@@ -11,9 +11,17 @@ import (
 	"os/signal"
 	"syscall"
 	"time"
+	"ginweb/src/conf"
 )
 
 func main() {
+
+	// 加载配置文件
+	conf.InitConfig("../../conf/conf.toml")
+
+	// 初始化数据库
+	conf.InitDB(conf.GlobalConfig)
+
 	// 同时将日志写入文件和控制台
 	f, _ := os.Create("./gin.log")
 	gin.DefaultWriter = io.MultiWriter(f, os.Stdout)
