@@ -15,17 +15,17 @@ func Router() {
 	// 加载中间件
 	RouterMux.Use(gin.Logger())
 
-	RouterMux.GET("/", controller.A1)
+	// 加入自定义中间件
+	RouterMux.GET("/", middleware.Middleware1, controller.A1)
 	RouterMux.GET("/welcome/:name", controller.GetParam)
 	RouterMux.GET("/welcome", controller.GetQuery)
 	RouterMux.POST("/post", controller.GetPostValue)
 	RouterMux.POST("/build", controller.BuildData)
 
 	// 路由组
-	v1 := RouterMux.Group("/v1")
+	v1 := RouterMux.Group("/v1", middleware.Middleware1)
 	{
-		// 加入中间件
-		v1.GET("/", middleware.Middleware1, controller.A1)
+		v1.GET("/", controller.A1)
 		v1.GET("/welcome/:name", controller.GetParam)
 	}
 }
