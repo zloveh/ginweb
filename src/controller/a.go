@@ -2,6 +2,7 @@ package controller
 
 import (
 	"ginweb/src/module"
+	"ginweb/src/util"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -14,6 +15,7 @@ func A1(c *gin.Context) {
 	res.SoldList = solds_list
 
 	c.JSON(http.StatusOK, res)
+	util.Infof("sold list: %v", solds_list)
 }
 
 func GetParam(c *gin.Context) {
