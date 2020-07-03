@@ -9,6 +9,9 @@ import (
 var RouterMux *gin.Engine
 
 func Router() {
+	// 默认debug, 线上需要设置成 release模式
+	// gin.SetMode(gin.ReleaseMode)
+
 	// 新建一个没有任何默认中间件的路由
 	RouterMux = gin.New()
 
