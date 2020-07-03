@@ -3,10 +3,17 @@ package controller
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"ginweb/src/module"
 )
 
 func A1(c *gin.Context) {
-	c.String(http.StatusOK, "Welcome Gin Server")
+	var res struct {
+		SoldList []string `json:"sold_list"`
+	}
+	solds_list, _ := module.GetInfo()
+	res.SoldList = solds_list
+
+	c.JSON(http.StatusOK, res)
 }
 
 func GetParam(c *gin.Context) {

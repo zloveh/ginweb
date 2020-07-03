@@ -37,7 +37,6 @@ func NewDBInstance(c DBconfig) *DBInstance {
 
 func InitDB(gconf *Config) {
 	app_type := gconf.APPName
-	log.Println(app_type)
 
 	if Riskdb == nil {
 		log.Printf("%s init db: riskdb", app_type)
