@@ -1,9 +1,9 @@
 package controller
 
 import (
+	"ginweb/src/module"
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"ginweb/src/module"
 )
 
 func A1(c *gin.Context) {

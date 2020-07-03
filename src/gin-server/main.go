@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"ginweb/src/conf"
 	"ginweb/src/gin-server/router"
 	"github.com/gin-gonic/gin"
 	"io"
@@ -11,7 +12,6 @@ import (
 	"os/signal"
 	"syscall"
 	"time"
-	"ginweb/src/conf"
 )
 
 func main() {
