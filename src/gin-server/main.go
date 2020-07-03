@@ -27,7 +27,7 @@ func main() {
 	conf.InitDB(conf.GlobalConfig)
 
 	// 同时将日志写入文件和控制台
-	f, _ := os.Create("./gin.log")
+	f, _ := os.Create("/tmp/gin.log")
 	gin.DefaultWriter = io.MultiWriter(f, os.Stdout)
 
 	// 注册路由
