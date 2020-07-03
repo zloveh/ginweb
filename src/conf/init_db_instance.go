@@ -2,7 +2,6 @@ package conf
 
 import (
 	"ginweb/src/util"
-	"log"
 )
 
 var (
@@ -39,7 +38,7 @@ func InitDB(gconf *Config) {
 	app_type := gconf.APPName
 
 	if Riskdb == nil {
-		log.Printf("%s init db: riskdb", app_type)
+		util.Infof("%s init db: riskdb", app_type)
 		Riskdb = NewDBInstance(gconf.RiskDBConfig)
 	}
 }

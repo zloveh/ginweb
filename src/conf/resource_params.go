@@ -11,10 +11,10 @@ var (
 )
 
 type Config struct {
-	APPName string       `toml:"app_name"`
-	SConfig ServerConfig `toml:"server"`
-	//LogConfig           LogConfig            `toml:"golog"`
-	RiskDBConfig DBconfig `toml:"riskdb"`
+	APPName      string       `toml:"app_name"`
+	SConfig      ServerConfig `toml:"server"`
+	LogConfig    LogConfig    `toml:"golog"`
+	RiskDBConfig DBconfig     `toml:"riskdb"`
 	//CacheConfig     map[string]Redisconfig     `toml:"cache"`
 }
 

@@ -5,9 +5,7 @@ import (
 	"flag"
 	"ginweb/src/conf"
 	"ginweb/src/gin-server/router"
-	"github.com/gin-gonic/gin"
-	"io"
-	"log"
+	"ginweb/src/util"
 	"net/http"
 	"os"
 	"os/signal"
@@ -16,38 +14,41 @@ import (
 )
 
 var conFile = flag.String("conf", "", "configuration file absulote path")
+var gconf *conf.Config
 
 func main() {
 	flag.Parse()
 
 	// 加载配置文件
 	conf.InitConfig(*conFile)
+	gconf = conf.GlobalConfig
+
+	// 初始化日志
+	conf.InitLogger(gconf.LogConfig)
 
 	// 初始化数据库
-	conf.InitDB(conf.GlobalConfig)
-
-	// 同时将日志写入文件和控制台
-	f, _ := os.Create("/tmp/gin.log")
-	gin.DefaultWriter = io.MultiWriter(f, os.Stdout)
+	conf.InitDB(gconf)
 
 	// 注册路由
 	router.Router()
 
 	// 启动服务
-	StartServer()
+	StartServer(gconf.SConfig)
 
 }
 
-func StartServer() {
+func StartServer(sc conf.ServerConfig) {
 	srv := &http.Server{
-		Handler: router.RouterMux,
-		Addr:    ":8080",
+		Handler:      router.RouterMux,
+		Addr:         ":8080",
+		ReadTimeout:  time.Duration(sc.WriteTimeout) * time.Millisecond,
+		WriteTimeout: time.Duration(sc.ReadTimeout) * time.Millisecond,
 	}
 
 	go func() {
 		err := srv.ListenAndServe()
 		if err != nil && err != http.ErrServerClosed {
-			log.Fatalf("listen: %s\\n", err)
+			util.Warningf("listen: %s\\n", err)
 		}
 	}()
 
@@ -60,19 +61,19 @@ func StartServer() {
 	//将对应的信号通知 quit
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
 	<-quit
-	log.Println("Shutdown Server ...")
+	util.Info("Shutdown Server ...")
 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
 	if err := srv.Shutdown(ctx); err != nil {
-		log.Fatal("Server Shutdown:", err)
+		util.Infof("Server Shutdown:", err)
 	}
 
 	// 5 秒后捕获 ctx.Done() 信号
 	select {
 	case <-ctx.Done():
-		log.Println("timeout of 5 seconds.")
+		util.Info("timeout of 5 seconds.")
 	}
-	log.Println("Server exiting")
+	util.Info("Server exiting")
 }

@@ -9,6 +9,15 @@ rest_port   = 7074
 read_timeout = 1000
 write_timeout = 1000
 
+[golog]
+level		= "INFO,DEBUG,WARNING,ERROR"
+console		= 0
+dir	        = "/tmp/ginlogs"
+filename	= "ginweb.log"
+reserve_num	= 30
+suffix		= "20060102"
+colorfull	= 0
+
 [riskdb]
 host	= "192.168.66.113"
 port	= 3306
