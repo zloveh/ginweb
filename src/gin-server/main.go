@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"flag"
 	"ginweb/src/conf"
 	"ginweb/src/gin-server/router"
 	"github.com/gin-gonic/gin"
@@ -14,10 +15,13 @@ import (
 	"time"
 )
 
+var conFile = flag.String("conf", "", "configuration file absulote path")
+
 func main() {
+	flag.Parse()
 
 	// 加载配置文件
-	conf.InitConfig("../../conf/conf.toml")
+	conf.InitConfig(*conFile)
 
 	// 初始化数据库
 	conf.InitDB(conf.GlobalConfig)
