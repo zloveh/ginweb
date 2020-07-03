@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"flag"
+	"fmt"
 	"ginweb/src/conf"
 	"ginweb/src/gin-server/router"
 	"ginweb/src/util"
@@ -40,7 +41,7 @@ func main() {
 func StartServer(sc conf.ServerConfig) {
 	srv := &http.Server{
 		Handler:      router.RouterMux,
-		Addr:         ":8080",
+		Addr:         fmt.Sprintf(":%d", sc.HttpPort),
 		ReadTimeout:  time.Duration(sc.WriteTimeout) * time.Millisecond,
 		WriteTimeout: time.Duration(sc.ReadTimeout) * time.Millisecond,
 	}
